@@ -39,6 +39,11 @@ msgstr ""
 msgid "Recipients"
 msgstr ""
 
+#: zzbrick_tables/mails.php
+msgctxt "E-Mail"
+msgid "Message"
+msgstr ""
+
 #: zzbrick_tables/mails-contacts.php
 msgid "Senders and Recipients"
 msgstr ""
