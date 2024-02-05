@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/mail
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2023 Gustaf Mossakowski
+ * @copyright Copyright © 2023-2024 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -68,7 +68,7 @@ $zz['fields'][7]['table_name'] = 'headers_sender';
 $zz['fields'][7]['min_records'] = 1;
 $zz['fields'][7]['min_records_required'] = 1;
 $zz['fields'][7]['max_records'] = 1;
-$zz['fields'][7]['form_display'] = 'lines';
+$zz['fields'][7]['form_display'] = 'inline';
 $zz['fields'][7]['sql'] = wrap_edit_sql(
 	$zz['fields'][7]['sql'], 'WHERE', sprintf('header_field_category_id = %d',
 	wrap_category_id('mail-headers/from'))
@@ -77,6 +77,7 @@ $zz['fields'][7]['fields'][2]['type'] = 'foreign_key';
 $zz['fields'][7]['fields'][3]['type'] = 'hidden';
 $zz['fields'][7]['fields'][3]['value'] = wrap_category_id('mail-headers/from');
 $zz['fields'][7]['fields'][3]['hide_in_form'] = true;
+$zz['fields'][7]['fields'][4]['title'] = 'From';
 $zz['fields'][7]['hide_in_list'] = true;
 
 $zz['fields'][2]['title'] = 'Message';
