@@ -1,0 +1,23 @@
+# mail module
+# template for sending a mail
+# 
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/mail
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2024 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+# 
+%%% condition if already_sent %%%
+<p>%%% text "The mail with the ID %d was already sent." mail_id %%%</p>
+
+%%% condition elseif need_post %%%
+<div><form action="" method="POST"><input type="submit" value="%%% text "Send mail ID %d" mail_id %%%"></form></div>
+
+%%% condition elseif successful_sent %%%
+<p>%%% text "The mail with the ID %d was sent successfully." mail_id %%%</p>
+
+%%% condition else %%%
+<p>%%% text "There was some problem sending the mail with the ID %d." mail_id %%%</p>
+
+%%% condition endif %%%

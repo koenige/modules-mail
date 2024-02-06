@@ -58,3 +58,21 @@ function mf_mail_update_body_db($mail, $mail_id) {
 	wrap_error(sprintf('Unable to update message body of mail ID %d', $mail_id));
 	return false;
 }
+
+/**
+ * update message, mark as sent
+ *
+ * @param int $mail_id
+ * @param string $status (optional, defaults to sent)
+ * @return bool
+ */
+function mf_mail_update_status_db($mail_id, $status = 'sent') {
+	$values = [];
+	$values['action'] = 'update';
+	$values['POST']['mail_id'] = $mail_id;
+	$values['POST']['mail_status_category_id'] = wrap_category_id('mail-status/'.$status);
+	$ops = zzform_multi('mails', $values);
+	if ($ops['result'] === 'successful_update') return true;
+	wrap_error(sprintf('Unable to update status of mail ID %d to %s', $mail_id, $status));
+	return false;
+}
