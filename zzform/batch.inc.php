@@ -2,7 +2,7 @@
 
 /**
  * mail module
- * common functions
+ * batch functions for zzform
  *
  * Part of »Zugzwang Project«
  * https://www.zugzwang.org/modules/mail
