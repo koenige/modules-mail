@@ -16,6 +16,7 @@
 $zz['title'] = 'Mails';
 $zz['table'] = '/*_PREFIX_*/mails';
 
+$zz['fields'][1]['title'] = 'ID';
 $zz['fields'][1]['field_name'] = 'mail_id';
 $zz['fields'][1]['type'] = 'id';
 
