@@ -40,3 +40,21 @@ function mf_mail_add_header_db($header, $body, $mail_id) {
 	}
 	return $ops['id'];
 }
+
+/**
+ * update message body of mail
+ *
+ * @param string $mail mail body
+ * @param int $mail_id
+ * @return bool
+ */
+function mf_mail_update_body_db($mail, $mail_id) {
+	$values = [];
+	$values['action'] = 'update';
+	$values['POST']['mail_id'] = $mail_id;
+	$values['POST']['mail'] = $mail;
+	$ops = zzform_multi('mails', $values);
+	if ($ops['result'] === 'successful_update') return true;
+	wrap_error(sprintf('Unable to update message body of mail ID %d', $mail_id));
+	return false;
+}
