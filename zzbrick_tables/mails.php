@@ -87,6 +87,14 @@ $zz['fields'][2]['type'] = 'memo';
 $zz['fields'][2]['rows'] = 5;
 $zz['fields'][2]['hide_in_list'] = true;
 
+$zz['fields'][8] = zzform_include('mails-media');
+$zz['fields'][8]['title'] = 'Attachments';
+$zz['fields'][8]['type'] = 'subtable';
+$zz['fields'][8]['table_name'] = 'attachments';
+$zz['fields'][8]['min_records'] = 1;
+$zz['fields'][8]['form_display'] = 'lines';
+$zz['fields'][8]['fields'][2]['type'] = 'foreign_key';
+
 $zz['fields'][4]['title'] = 'Status';
 $zz['fields'][4]['field_name'] = 'mail_status_category_id';
 $zz['fields'][4]['type'] = 'select';
