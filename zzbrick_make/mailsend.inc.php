@@ -50,8 +50,16 @@ function mod_mail_make_mailsend($params) {
 	$sql = sprintf($sql, $data['mail_id']);
 	$data['headers'] = wrap_db_fetch($sql, '_dummy_', 'key/value');
 
-	// @todo read mails_media
-	
+	$data['media'] = wrap_get_media($data['mail_id'], 'mails', 'mail', ['published = "yes" OR published = "no"']);
+	// turn everything into an attachment (= links) here
+	if (!empty($data['media']['images'])) {
+		if ($data['media']['links'])
+			$data['media']['links'] = array_merge($data['media']['links'], $data['media']['images']);
+		else
+			$data['media']['links'] = $data['media']['images'];
+		unset($data['media']['images']);
+	}
+
 	$headers = $data['headers'];
 	unset($headers['To']);
 	unset($headers['Subject']);
@@ -61,6 +69,9 @@ function mod_mail_make_mailsend($params) {
 		'to' => $data['headers']['To'] ?? wrap_setting('own_e_mail'),
 		'headers' => $headers
 	];
+	if ($data['media'])
+		$mail['multipart']['files'] = mf_media_mail_attachments($data['media']);
+
 	$data['successful_sent'] = wrap_mail($mail);
 	if ($data['successful_sent']) {
 		wrap_include_files('zzform/batch', 'mail');
