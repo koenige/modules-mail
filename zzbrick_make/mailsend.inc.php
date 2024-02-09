@@ -61,12 +61,17 @@ function mod_mail_make_mailsend($params) {
 	}
 
 	$headers = $data['headers'];
-	unset($headers['To']);
-	unset($headers['Subject']);
+	foreach ($headers as $key => $value) {
+		$key_lc = strtolower($key);
+		if (in_array($key_lc, ['to', 'subject']))
+			unset($headers[$key]);
+		elseif (in_array($key_lc, ['cc', 'bcc', 'reply-to', 'from']))
+			$headers[$key] = mod_mail_make_mailsend_encode($headers[$key]);
+	}
 	$mail = [
 		'message' => $data['mail'],
 		'subject' => $data['headers']['Subject'] ?? wrap_text('E-Mail via %s', ['values' => [wrap_setting('site')]]),
-		'to' => $data['headers']['To'] ?? wrap_setting('own_e_mail'),
+		'to' => mod_mail_make_mailsend_encode($data['headers']['To']) ?? wrap_setting('own_e_mail'),
 		'headers' => $headers
 	];
 	if ($data['media'])
@@ -80,4 +85,14 @@ function mod_mail_make_mailsend($params) {
 	
 	$page['text'] = wrap_template('mailsend', $data);
 	return $page;
+}
+
+function mod_mail_make_mailsend_encode($string) {
+	if (!strstr($string, ' ')) return $string;
+	$array = explode(' ', $string);
+	$name['e_mail'] = array_pop($array);
+	$name['e_mail'] = rtrim(ltrim($name['e_mail'], '<'), '>');
+	$name['name'] = implode(' ', $array);
+	$name['name'] = trim($name['name'], '"');
+	return $name;
 }
