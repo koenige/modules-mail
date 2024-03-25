@@ -34,9 +34,9 @@ function mf_mail_add_header_db($header, $body, $mail_id) {
 	$values['POST']['header_body'] = $body;
 	$ops = zzform_multi('mails-headers', $values);
 	if (!$ops['id']) {
-		wrap_error('Unable to add header %s (value %s) for mail ID %d, Reason: %s'
-			, $header, $body, $mail_id, json_encode($ops['error'])
-		);
+		wrap_error(wrap_text('Unable to add header %s (value %s) for mail ID %d, Reason: %s'
+			, ['values' => [$header, $body, $mail_id, json_encode($ops['error'])]]
+		));
 	}
 	return $ops['id'];
 }
@@ -55,7 +55,7 @@ function mf_mail_update_body_db($mail, $mail_id) {
 	$values['POST']['mail'] = $mail;
 	$ops = zzform_multi('mails', $values);
 	if ($ops['result'] === 'successful_update') return true;
-	wrap_error(sprintf('Unable to update message body of mail ID %d', $mail_id));
+	wrap_error(wrap_text('Unable to update message body of mail ID %d', ['values' => [$mail_id]]));
 	return false;
 }
 
@@ -73,6 +73,6 @@ function mf_mail_update_status_db($mail_id, $status = 'sent') {
 	$values['POST']['mail_status_category_id'] = wrap_category_id('mail-status/'.$status);
 	$ops = zzform_multi('mails', $values);
 	if ($ops['result'] === 'successful_update') return true;
-	wrap_error(sprintf('Unable to update status of mail ID %d to %s', $mail_id, $status));
+	wrap_error(wrap_text('Unable to update status of mail ID %d to %s', ['values' => [$mail_id, $status]]));
 	return false;
 }
